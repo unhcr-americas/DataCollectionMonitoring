@@ -43,10 +43,20 @@ Got to UNHCR Rstudio server - [http://rstudio.unhcr.org](http://rstudio.unhcr.or
 
 You need now to set up the kobotoolbox authentication token within the Rstudio server so that the server can actually pull the data from Kobotoolbox in oder to regenerate the Report.
 
+![ ](https://raw.githubusercontent.com/unhcr-americas/DataCollectionMonitoring/main/fromGit4.png)
+
+![ ](https://raw.githubusercontent.com/unhcr-americas/DataCollectionMonitoring/main/fromGit5.png)
+
 
 
 
 ## Step 4 -  Set up report frequency generation and sending it to your email
+
+![ ](https://raw.githubusercontent.com/unhcr-americas/DataCollectionMonitoring/main/fromGit6.png)
+
+![ ](https://raw.githubusercontent.com/unhcr-americas/DataCollectionMonitoring/main/fromGit7.png)
+
+
 
 
 
