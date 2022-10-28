@@ -22,10 +22,11 @@ Note that if you are the one developing any of this package, you will first need
 
 Got to UNHCR Rstudio server - [http://rstudio.unhcr.org](http://rstudio.unhcr.org) - you need first to have a license associated to your account - Contact Global Data Service Data Science team for that.
  
-![ ](https://github.com/unhcr-americas/DataCollectionMonitoring/raw/master/img/fromGit.png)
+![ ](https://raw.githubusercontent.com/unhcr-americas/DataCollectionMonitoring/main/fromGit.png) 
 
 
-![ ](https://github.com/unhcr-americas/DataCollectionMonitoring/raw/master/img/fromGit2.png)
+
+![ ](https://raw.githubusercontent.com/unhcr-americas/DataCollectionMonitoring/main/fromGit2.png)
 
 
 
