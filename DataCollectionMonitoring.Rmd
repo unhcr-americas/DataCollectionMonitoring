@@ -1,0 +1,440 @@
+---
+title: "Data Collection Quality Analysis Report"
+date: " `r format(Sys.Date(),  '%d %B %Y')`"
+subtitle: "Result Monitoring Survey - Trinidad & Tobago (LWC)"
+output:
+  unhcrdown::pptx_slides
+params:
+  uuid: "aM4SnZ43SSxXEh8HecqUzh"
+  source: "RMS in Trinidad & Tobago, October-November / LWC"
+  interview_start_var: "start" 
+  interview_end_var: "end"
+  enumeratorID: "username"
+  uniquerespondantID: "Intro02" 
+  consent: "Intro04" 
+  consentForValidSurvey: "1"
+  attempt: "attempt1" 
+  householdSize: "HH01"
+  otherPattern: "_other$"
+  surveyDate: "interviewdate"
+  dateFormat: "%Y-%m-%d"
+  startDataCollection: "2022-10-22"
+  dsSite: "union_name"
+  sampleSizeTable: "SampleSize.csv"
+  sampleSizeTableSite: "Union"
+  sampleSizeTableTarget: "SS"
+  sampleSizeTableAvailable: "TotPts"            
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      collapse = FALSE,
+                      comment = "#>",
+                      # fig.width = 5.5, fig.height = 4,
+                      fig.retina = 2, 
+                      fig.width = 9,
+                      fig.asp = 0.618,
+                      fig.align = "center",
+                      dev = "ragg_png",
+                      out.width = "90%")
+options(scipen = 999) # turn-off scientific notation like 1e+48
+set.seed(1)
+extrafont::loadfonts(quiet=TRUE)
+
+library("ggplot2")
+library("unhcrthemes")
+ggplot2::theme_set( unhcrthemes::theme_unhcr(font_size = 16))
+
+library(tidyverse)
+library(lubridate)
+library(httr)
+library("officedown")
+
+# devtools::install_github("edouard-legoupil/HighFrequencyChecks")
+# devtools::install_github("vidonne/unhcrthemes")
+# devtools::install_github("vidonne/unhcrdown")
+
+library(HighFrequencyChecks)
+library(unhcrthemes)
+
+# remotes::install_gitlab("dickoa/robotoolbox")
+#  edit directly the .Renviron file or access it by calling usethis::edit_r_environ() (assuming you have the usethis package installed) 
+# and entering the following two lines:
+# 
+# KOBOTOOLBOX_URL="https://kobo.unhcr.org/"
+# KOBOTOOLBOX_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+library("robotoolbox")
+#kobo_settings()
+
+# turn off the automatic use of showtext functionality, so that the dml function can works properly
+showtext::showtext_auto(FALSE) 
+```
+
+```{r param, include=FALSE}
+## In case the ridl parameters is set, the below will get the data from the ckan container 
+
+data <- robotoolbox::kobo_submissions(robotoolbox::kobo_asset(params$uuid))
+form <- robotoolbox::kobo_form(robotoolbox::kobo_asset(params$uuid))
+```
+
+
+```{r param2, include=FALSE}
+
+dates <- c(params$interview_start_var, params$interview_end_var)
+uniquerespondantID <- params$uniquerespondantID
+enumeratorID <- params$enumeratorID
+attempt <- params$attempt
+reportingColumns <- c(enumeratorID, uniquerespondantID, attempt)
+surveyConsent <- params$consent 
+consentForValidSurvey <- params$consentForValidSurvey
+surveyDate <- params$surveyDate 
+startDataCollection <- params$startDataCollection
+dateFormat <- params$dateFormat 
+householdSize <- params$householdSize
+otherPattern <- params$otherPattern
+sdval <- 2
+minimumSurveyDuration <- 30
+minimumSurveyDurationByIndividual <- 10
+
+dsSite <- params$dsSite 
+sampleSizeTable  <- params$sampleSizeTable
+sampleSizeTableSite <- params$sampleSizeTableSite
+sampleSizeTableTarget  <- params$sampleSizeTableTarget
+sampleSizeTableAvailable  <- params$sampleSizeTableAvailable              # Usually the Target + a buffer
+
+selectM <- form |>
+                            dplyr::filter(type == "select_multiple") |>
+                            dplyr::select(name) |>
+                            dplyr::distinct() |>
+                            dplyr::pull()
+  
+  
+questionsEnumeratorIsLazy <- c(HACC02=3,
+                               HACC04=3,
+                               MEA2Wh=3 )
+
+
+```
+
+```{r}
+ds <- data[["main"]]
+ds[["startDataCollectionvar"]] <- ds[[dates[[2]]]]
+    ds <- ds |>
+          dplyr::filter( as.Date(startDataCollectionvar) > as.Date(startDataCollection))
+    
+ds[[dates[[2]]]] <- dplyr::if_else(nchar(ds[[dates[[2]]]]) == 29,
+                                substr(ds[[dates[[2]]]],0,23) ,
+                                ds[[dates[[2]]]])
+  ds[[dates[[1]]]] <- dplyr::if_else(nchar(ds[[dates[[1]]]]) == 29,
+                                substr(ds[[dates[[1]]]],0,23) ,
+                                ds[[dates[[1]]]])
+    
+  ds[[dates[[2]]]]<- stringi::stri_datetime_format(strptime(ds[[dates[[2]]]], "%Y-%m-%dT%H:%M:%OS")) 
+  ds[[dates[[1]]]] <- stringi::stri_datetime_format(strptime(ds[[dates[[1]]]], "%Y-%m-%dT%H:%M:%OS")) 
+  
+   ds$hourstart <- as.factor(format(as_datetime(ds[[dates[[1]]]], "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+       "%H"))
+  
+  ds[["surveytime"]]   <- difftime(ds[[dates[[2]]]], ds[[dates[[1]]]],  units = "secs") / 60
+  
+  ds[["attemptdisag"]]   <- ds[[attempt]] 
+  lab <- as.data.frame(sjlabelled::get_labels(ds$attemptdisag))
+lab$attemptdisag <- row.names(lab)
+names(lab)[1] <- "labattemptdisag"
+
+ds <- ds |>
+      dplyr::left_join(lab, by = c("attemptdisag"))
+  
+  ds$labattemptdisag <- dplyr::recode( ds$labattemptdisag,
+      "Call got cut because of network​" =   "Call got cut because of network",
+     "Nobody answered after ring at least 6 times.​" = "Nobody answered after 6 times",
+    "The number does not exist​/it was disconnect/belongs now to a different person" = "number does not exist",
+     "The person is not interested to answer ​" = "Person not interested to answer",
+     "The person stopped the interview before the end​" = "Person stopped interview before end",                      "The phone is switched off​"="Phone is switched off",                                                              "The phone number belong to a linked person who gave another number​"="Linked person who gave another number",   "Yes, individual picked the phone​"="Yes, individual picked the phone",
+"Yes, individual picked the phone​ but could not reply now and provided an appointment time​"="Provided an appointment time")
+  
+  ds$labattemptdisag <- factor(ds$labattemptdisag ,
+                               levels = c( 
+     "number does not exist",
+      "Nobody answered after 6 times",
+     "Person not interested to answer",
+     "Person stopped interview before end",           
+     "Phone is switched off",          
+     "Call got cut because of network",
+     "Linked person who gave another number",  
+     "Provided an appointment time",
+     "Yes, individual picked the phone"))
+  
+
+```
+
+
+
+
+## Overview
+
+
+
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+  
+ret_log <-ds |>
+                dplyr::group_by(attemptdisag) |>
+                dplyr::summarise(count = dplyr::n(),
+                                 average_Duration = round(mean(as.numeric(surveytime) ), digits = 2),
+                                 total_Duration = round(sum(as.numeric(surveytime)), digits = 2)) |>
+                dplyr::mutate( label = sjlabelled::get_labels(attemptdisag) ) |>
+               dplyr::select(label, count, average_Duration, total_Duration )
+                
+ggplot2::ggplot(ret_log) + 
+               ggplot2::geom_col(ggplot2::aes( x= reorder(label, average_Duration), 
+                                               y = average_Duration),
+                                 fill = "#0072BC") +
+               ggplot2::coord_flip() +
+               unhcrthemes::theme_unhcr(font_size = 12) +
+               ggplot2::theme( axis.line.y=element_blank(),
+                             axis.ticks.y=element_blank(),
+                             panel.grid.major.y=element_blank(),
+                             panel.grid.minor.y=element_blank()) +
+               ggplot2::labs(title = "Interview Duration", 
+                             x = " ", 
+                             y = "Average Duration (min)") -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+
+---
+
+
+```{r ph=officer::ph_location_fullsize()}
+ tmp <-ds %>%
+    #dplyr::group_by(surveydate=surveydate) %>%
+    dplyr::filter(! (is.na(.data[[ surveyDate ]]))) %>%
+    dplyr::group_by(surveydate=.data[[ surveyDate ]]) %>%
+    dplyr::summarize(NbSurvey= dplyr::n()) %>%
+    dplyr::mutate(surveydate = as.factor(format(as.Date(surveydate, dateFormat),
+                                               "%d-%m")))
+  ggplot2::ggplot(tmp) +
+           ggplot2::geom_col(ggplot2::aes(x = surveydate, 
+                                          y = NbSurvey),
+                                 fill = "#0072BC") +
+           unhcrthemes::theme_unhcr(font_size = 14) +
+    ggplot2::theme(panel.grid.major.x=ggplot2::element_blank(),
+                   panel.grid.minor.x=ggplot2::element_blank(),
+                   axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+    ggplot2::labs(title = "Number of Completed Valid Interviews per day",
+                  x = "Dates",
+                  y="Number of Interview") -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+
+```{r ph=officer::ph_location_fullsize()}
+
+
+ ggplot2::ggplot(ds) + 
+           ggplot2::geom_boxplot(ggplot2::aes( x= as.numeric(surveytime),
+                                               y = labattemptdisag), outlier.colour = "red") +
+           unhcrthemes::theme_unhcr(font_size = 14) +
+           ggplot2::theme(axis.line.y=element_blank(),
+                         axis.ticks.y=element_blank(),
+                         panel.grid.major.y=element_blank(),
+                         panel.grid.minor.y=element_blank()) +
+           ggplot2::labs(title = "Interview Duration Outliers", 
+                         x = "Duration (Sec)", 
+                         y="")  -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+
+```{r ph=officer::ph_location_fullsize()}
+
+tmp <- ds %>% 
+    dplyr::mutate( calldate = format(as.Date(.data[[dates[[2]]]]), "%d-%m") )%>% 
+    dplyr::group_by(calldate, 
+                    attempt=.data[[attempt]]) %>%  
+    dplyr::count(.data[[surveyConsent]]) 
+
+lab <- as.data.frame(sjlabelled::get_labels(ds$attemptdisag))
+lab$attempt <- row.names(lab)
+names(lab)[1] <- "labattemptdisag"
+
+tmp <- tmp |>
+      dplyr::left_join(lab, by = c("attempt"))
+  
+ ggplot2::ggplot(tmp, ggplot2::aes(x= calldate,
+                                   y=n, 
+                                   fill = labattemptdisag)) +
+    ggplot2::geom_col() +
+    ggplot2::facet_wrap(~ labattemptdisag,
+             labeller = labeller(labattemptdisag = label_wrap_gen(width = 45)) ) + 
+    unhcrthemes::theme_unhcr(font_size = 10) +
+    ggplot2::theme(panel.grid.major.x=ggplot2::element_blank(),
+                   panel.grid.minor.x=ggplot2::element_blank(),
+                   axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+                         legend.position="none",
+                   strip.text = element_text(size = 8)) +
+    ggplot2::labs(title = "Daily number of filled forms per consent status",
+                  x = "Dates",
+                  y="Number of surveys", 
+                  fill="Consent status") -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+## By Enumerator
+
+
+---
+
+
+```{r ph=officer::ph_location_fullsize()}
+
+ tmp <- ds %>% 
+          dplyr::group_by(enumeratorID=ds[[enumeratorID]]) %>%
+          dplyr::count(.data[[ "labattemptdisag"]]) %>%
+          dplyr::mutate(pct=round(100*n/sum(n), digits=2)) 
+  
+  names(tmp)[1] <- "Enumerator"
+  names(tmp)[2] <- "Attempt"
+  
+   ggplot(tmp   ) +
+     geom_col(aes(x = Attempt, 
+                  y = n ) ,
+                 fill = "#0072BC") +
+    ggplot2::facet_wrap(~ Enumerator) + 
+    unhcrthemes::theme_unhcr(font_size = 8) +
+    ggplot2::theme(panel.grid.major.x=ggplot2::element_blank(),
+                   panel.grid.minor.x=ggplot2::element_blank(),
+                   legend.position="right",
+                   legend.direction = "vertical",
+                   legend.text=element_text(size=8)) +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 40)) +
+    # ggplot2::theme(panel.grid.major.y=ggplot2::element_blank()) +
+    ggplot2::labs(title = "Number of Attempt type by enumerator ",
+                  x = "Enumerators", 
+                  y="Percent", 
+                  fill="") +
+    ggplot2::coord_flip()  -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+---
+
+
+```{r ph=officer::ph_location_fullsize()}
+
+ tmp <- ds %>% 
+          dplyr::group_by(enumeratorID=ds[[enumeratorID]]) %>%
+          dplyr::count(.data[[ "labattemptdisag"]]) %>%
+          dplyr::mutate(pct=round(100*n/sum(n), digits=2)) 
+  
+  names(tmp)[1] <- "Enumerator"
+  names(tmp)[2] <- "Attempt"
+  
+   ggplot(tmp   ) +
+     geom_col(aes(x = Enumerator, 
+                  y = pct,
+                  fill = Attempt) ) +
+    unhcrthemes::theme_unhcr(font_size = 12) +
+    ggplot2::theme(panel.grid.major.x=ggplot2::element_blank(),
+                   panel.grid.minor.x=ggplot2::element_blank(),
+                   legend.position="right",
+                   legend.direction = "vertical",
+                   legend.text=element_text(size=8)) +
+    viridis::scale_fill_viridis(discrete = TRUE,
+                                labels = function(x) str_wrap(x, width = 20)) +
+    # ggplot2::theme(panel.grid.major.y=ggplot2::element_blank()) +
+    ggplot2::labs(title = "Percentage of Attempt type by enumerator ",
+                  x = "Enumerators", 
+                  y="Percent", 
+                  fill="") +
+    ggplot2::coord_flip()  -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+ret_log <-ds |>
+                dplyr::group_by(labattemptdisag,
+                                enumeratorID=ds[[enumeratorID]]) |>
+                dplyr::summarise(count = dplyr::n(),
+                                 average_Duration = round(mean(as.numeric(surveytime) ), digits = 2),
+                                 total_Duration = round(sum(as.numeric(surveytime)), digits = 2)) 
+                
+ggplot2::ggplot(ret_log) + 
+               ggplot2::geom_col(ggplot2::aes( x= reorder(labattemptdisag , average_Duration), 
+                                               y = average_Duration),
+                                 fill = "#0072BC") +
+               ggplot2::coord_flip() +
+               ggplot2::facet_wrap(~ enumeratorID) + 
+               unhcrthemes::theme_unhcr(font_size = 8) +
+               ggplot2::theme( axis.line.y=element_blank(),
+                             axis.ticks.y=element_blank(),
+                             panel.grid.major.y=element_blank(),
+                             panel.grid.minor.y=element_blank(),
+                         legend.position="none") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
+               ggplot2::labs(title = "Interview Duration", 
+                             x = " ", 
+                             y = "Average Duration (min)") -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+---
+
+```{r ph=officer::ph_location_fullsize()}
+
+ret_log <-ds |>
+                dplyr::group_by(hourstart,
+                                enumeratorID=ds[[enumeratorID]]) |>
+                dplyr::summarise(count = dplyr::n(),
+                                 average_Duration = round(mean(as.numeric(surveytime) ), digits = 2),
+                                 total_Duration = round(sum(as.numeric(surveytime)), digits = 2)) 
+                
+ggplot2::ggplot(ret_log) + 
+               ggplot2::geom_col(ggplot2::aes( x= hourstart , 
+                                               y = count),
+                                 fill = "#0072BC") + 
+               ggplot2::facet_wrap(~ enumeratorID) + 
+               unhcrthemes::theme_unhcr(font_size = 8) +
+               ggplot2::theme( axis.line.y=element_blank(),
+                             axis.ticks.y=element_blank(),
+                             panel.grid.major.y=element_blank(),
+                             panel.grid.minor.y=element_blank(),
+                         legend.position="none") +
+              scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
+               ggplot2::labs(title = "Attempt per hour", 
+                             x = " ", 
+                             y = "Number of Attempt") -> p
+
+rvg::dml(ggobj = p, fonts = list(serif = 'Lato'))
+```
+
+
+
+
+
