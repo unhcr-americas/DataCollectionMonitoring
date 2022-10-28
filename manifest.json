@@ -166,12 +166,12 @@
       }
     },
     "HighFrequencyChecks": {
-      "Source": "CRAN",
+      "Source": "github",
       "Repository": null,
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
+      "GithubRepo": "HighFrequencyChecks",
+      "GithubUsername": "edouard-legoupil",
+      "GithubRef": "HEAD",
+      "GithubSha1": "6d69deff56763f68038c854924355115754064f9",
       "description": {
         "Type": "Package",
         "Package": "HighFrequencyChecks",
@@ -183,14 +183,25 @@
         "License": "MIT + file LICENSE",
         "URL": "https://edouard-legoupil.github.io/HighFrequencyChecks/docs/",
         "Depends": "R (>= 3.5.0)",
-        "Imports": "DescTools,\ndplyr,\ngeosphere,\nggplot2,\nmagrittr,\noutliers,\nreadr,\nreshape2,\nsp,\nstats,\nstringi,\nutils",
-        "Suggests": "data.table,\nDT,\ngsubfn,\nknitr,\nrmarkdown,\ntestthat",
+        "Imports": "DescTools, dplyr, geosphere, ggplot2, magrittr, outliers,\nreadr, reshape2, sp, stats, stringi, utils",
+        "Suggests": "data.table, DT, gsubfn, knitr, rmarkdown, testthat",
         "VignetteBuilder": "knitr",
         "Encoding": "UTF-8",
-        "LazyData": "true",
         "RoxygenNote": "7.2.1",
+        "RemoteType": "github",
+        "RemoteHost": "api.github.com",
+        "RemoteRepo": "HighFrequencyChecks",
+        "RemoteUsername": "edouard-legoupil",
+        "RemoteRef": "HEAD",
+        "RemoteSha": "6d69deff56763f68038c854924355115754064f9",
+        "GithubRepo": "HighFrequencyChecks",
+        "GithubUsername": "edouard-legoupil",
+        "GithubRef": "HEAD",
+        "GithubSHA1": "6d69deff56763f68038c854924355115754064f9",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-10-28 17:34:04 UTC; edouard",
         "Author": "Edouard Legoupil [aut, cre],\n  Yannick Pascaud [aut]",
-        "Built": "R 4.2.1; ; 2022-10-27 18:17:56 UTC; unix"
+        "Built": "R 4.2.1; ; 2022-10-28 17:34:05 UTC; unix"
       }
     },
     "MASS": {
@@ -1440,7 +1451,7 @@
       "GithubSha1": null,
       "description": {
         "Package": "e1071",
-        "Version": "1.7-11",
+        "Version": "1.7-12",
         "Title": "Misc Functions of the Department of Statistics, Probability\nTheory Group (Formerly: E1071), TU Wien",
         "Imports": "graphics, grDevices, class, stats, methods, utils, proxy",
         "Suggests": "cluster, mlbench, nnet, randomForest, rpart, SparseM, xtable,\nMatrix, MASS, slam",
@@ -1449,12 +1460,12 @@
         "License": "GPL-2 | GPL-3",
         "LazyLoad": "yes",
         "NeedsCompilation": "yes",
-        "Packaged": "2022-06-03 13:31:36 UTC; meyer",
+        "Packaged": "2022-10-23 08:51:14 UTC; meyer",
         "Author": "David Meyer [aut, cre],\n  Evgenia Dimitriadou [aut, cph],\n  Kurt Hornik [aut],\n  Andreas Weingessel [aut],\n  Friedrich Leisch [aut],\n  Chih-Chung Chang [ctb, cph] (libsvm C++-code),\n  Chih-Chen Lin [ctb, cph] (libsvm C++-code)",
         "Maintainer": "David Meyer <David.Meyer@R-project.org>",
         "Repository": "CRAN",
-        "Date/Publication": "2022-06-07 11:02:32 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; 2022-06-25 16:09:30 UTC; unix"
+        "Date/Publication": "2022-10-24 11:30:25 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-28 17:33:52 UTC; unix"
       }
     },
     "ellipsis": {
@@ -3290,7 +3301,7 @@
         "Package": "openssl",
         "Type": "Package",
         "Title": "Toolkit for Encryption, Signatures and Certificates Based on\nOpenSSL",
-        "Version": "2.0.3",
+        "Version": "2.0.4",
         "Authors@R": "c(person(\"Jeroen\", \"Ooms\", role = c(\"aut\", \"cre\"), email = \"jeroen@berkeley.edu\",\n    comment = c(ORCID = \"0000-0002-4035-0289\")),\n    person(\"Oliver\", \"Keyes\", role = \"ctb\"))",
         "Description": "Bindings to OpenSSL libssl and libcrypto, plus custom SSH key parsers.\n    Supports RSA, DSA and EC curves P-256, P-384, P-521, and curve25519. Cryptographic\n    signatures can either be created and verified manually or via x509 certificates. \n    AES can be used in cbc, ctr or gcm mode for symmetric encryption; RSA for asymmetric\n    (public key) encryption or EC for Diffie Hellman. High-level envelope functions \n    combine RSA and AES for encrypting arbitrary sized data. Other utilities include key\n    generators, hash functions (md5, sha1, sha256, etc), base64 encoder, a secure random\n    number generator, and 'bignum' math methods for manually performing crypto \n    calculations on large multibyte integers.",
         "License": "MIT + file LICENSE",
@@ -3303,12 +3314,12 @@
         "RoxygenNote": "7.2.1",
         "Encoding": "UTF-8",
         "NeedsCompilation": "yes",
-        "Packaged": "2022-09-13 21:27:14 UTC; jeroen",
+        "Packaged": "2022-10-17 08:56:04 UTC; jeroen",
         "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),\n  Oliver Keyes [ctb]",
         "Maintainer": "Jeroen Ooms <jeroen@berkeley.edu>",
         "Repository": "CRAN",
-        "Date/Publication": "2022-09-14 07:40:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; \"Mon, 19 Sep 2022 17:01:06 +0000\"; unix"
+        "Date/Publication": "2022-10-17 09:30:05 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-28 17:12:00 UTC; unix"
       }
     },
     "outliers": {
@@ -3501,7 +3512,7 @@
       "description": {
         "Package": "processx",
         "Title": "Execute and Control System Processes",
-        "Version": "3.7.0",
+        "Version": "3.8.0",
         "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\", \"cph\"),\n           comment = c(ORCID = \"0000-0001-7098-9676\")),\n    person(\"Winston\", \"Chang\", role = \"aut\"),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\")),\n    person(\"Mango Solutions\", role = c(\"cph\", \"fnd\"))\n  )",
         "Description": "Tools to run system processes in the background.  It can\n    check if a background process is running; wait on a background process\n    to finish; get the exit status of finished processes; kill background\n    processes. It can read the standard output and error of the processes,\n    using non-blocking connections. 'processx' can poll a process for\n    standard output or error, with a timeout. It can also poll several\n    processes at once.",
         "License": "MIT + file LICENSE",
@@ -3515,12 +3526,12 @@
         "Config/testthat/edition": "3",
         "Config/Needs/website": "tidyverse/tidytemplate",
         "NeedsCompilation": "yes",
-        "Packaged": "2022-07-07 13:41:45 UTC; gaborcsardi",
+        "Packaged": "2022-10-26 10:23:37 UTC; gaborcsardi",
         "Author": "Gábor Csárdi [aut, cre, cph] (<https://orcid.org/0000-0001-7098-9676>),\n  Winston Chang [aut],\n  RStudio [cph, fnd],\n  Mango Solutions [cph, fnd]",
         "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
         "Repository": "CRAN",
-        "Date/Publication": "2022-07-07 14:20:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-08-08 08:48:09 UTC; unix"
+        "Date/Publication": "2022-10-26 11:12:39 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-28 17:37:31 UTC; unix"
       }
     },
     "progress": {
@@ -4493,12 +4504,12 @@
       "GithubSha1": null,
       "description": {
         "Package": "sp",
-        "Version": "1.4-7",
+        "Version": "1.5-0",
         "Title": "Classes and Methods for Spatial Data",
         "Authors@R": "c(person(\"Edzer\", \"Pebesma\", role = c(\"aut\", \"cre\"),\n\t\t\t\temail = \"edzer.pebesma@uni-muenster.de\"),\n\t\t\tperson(\"Roger\", \"Bivand\", role = \"aut\",\n            \temail = \"Roger.Bivand@nhh.no\"),\n\t\t\tperson(\"Barry\", \"Rowlingson\", role = \"ctb\"),\n\t\t\tperson(\"Virgilio\", \"Gomez-Rubio\", role = \"ctb\"),\n\t\t\tperson(\"Robert\", \"Hijmans\", role = \"ctb\"),\n\t\t\tperson(\"Michael\", \"Sumner\", role = \"ctb\"),\n\t\t\tperson(\"Don\", \"MacQueen\", role = \"ctb\"),\n\t\t\tperson(\"Jim\", \"Lemon\", role = \"ctb\"),\n                        person(\"Finn\", \"Lindgren\", role = \"ctb\"),\n\t\t\tperson(\"Josh\", \"O'Brien\", role = \"ctb\"),\n\t\t\tperson(\"Joseph\", \"O'Rourke\", role = \"ctb\"))",
         "Depends": "R (>= 3.0.0), methods",
         "Imports": "utils, stats, graphics, grDevices, lattice, grid",
-        "Suggests": "RColorBrewer, rgdal (>= 1.2-3), rgeos (>= 0.3-13), gstat,\nmaptools, deldir, knitr, rmarkdown",
+        "Suggests": "RColorBrewer, rgdal (>= 1.2-3), rgeos (>= 0.3-13), gstat,\nmaptools, deldir, knitr, rmarkdown, sf",
         "Description": "Classes and methods for spatial\n  data; the classes document where the spatial location information\n  resides, for 2D or 3D data. Utility functions are provided, e.g. for\n  plotting data as maps, spatial selection, as well as methods for\n  retrieving coordinates, for subsetting, print, summary, etc.",
         "License": "GPL (>= 2)",
         "URL": "https://github.com/edzer/sp/ https://edzer.github.io/sp/",
@@ -4506,12 +4517,12 @@
         "Collate": "bpy.colors.R AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R\nSpatial-methods.R projected.R Class-SpatialPoints.R\nSpatialPoints-methods.R Class-SpatialPointsDataFrame.R\nSpatialPointsDataFrame-methods.R Class-SpatialMultiPoints.R\nSpatialMultiPoints-methods.R\nClass-SpatialMultiPointsDataFrame.R\nSpatialMultiPointsDataFrame-methods.R Class-GridTopology.R\nClass-SpatialGrid.R Class-SpatialGridDataFrame.R\nClass-SpatialLines.R SpatialLines-methods.R\nClass-SpatialLinesDataFrame.R SpatialLinesDataFrame-methods.R\nClass-SpatialPolygons.R Class-SpatialPolygonsDataFrame.R\nSpatialPolygons-methods.R SpatialPolygonsDataFrame-methods.R\nGridTopology-methods.R SpatialGrid-methods.R\nSpatialGridDataFrame-methods.R SpatialPolygons-internals.R\npoint.in.polygon.R SpatialPolygons-displayMethods.R zerodist.R\nimage.R stack.R bubble.R mapasp.R select.spatial.R gridded.R\nasciigrid.R spplot.R over.R spsample.R recenter.R dms.R\ngridlines.R spdists.R rbind.R flipSGDF.R chfids.R loadmeuse.R\ncompassRose.R surfaceArea.R spOptions.R subset.R disaggregate.R\nsp_spat1.R merge.R aggregate.R",
         "VignetteBuilder": "knitr",
         "NeedsCompilation": "yes",
-        "Packaged": "2022-04-18 21:16:35 UTC; edzer",
+        "Packaged": "2022-06-03 16:29:56 UTC; edzer",
         "Author": "Edzer Pebesma [aut, cre],\n  Roger Bivand [aut],\n  Barry Rowlingson [ctb],\n  Virgilio Gomez-Rubio [ctb],\n  Robert Hijmans [ctb],\n  Michael Sumner [ctb],\n  Don MacQueen [ctb],\n  Jim Lemon [ctb],\n  Finn Lindgren [ctb],\n  Josh O'Brien [ctb],\n  Joseph O'Rourke [ctb]",
         "Maintainer": "Edzer Pebesma <edzer.pebesma@uni-muenster.de>",
         "Repository": "CRAN",
-        "Date/Publication": "2022-04-20 10:00:02 UTC",
-        "Built": "R 4.2.0; x86_64-pc-linux-gnu; \"Mon, 09 May 2022 01:45:29 +0000\"; unix"
+        "Date/Publication": "2022-06-05 17:30:02 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-28 17:33:57 UTC; unix"
       }
     },
     "stringi": {
@@ -4589,24 +4600,23 @@
         "Package": "sys",
         "Type": "Package",
         "Title": "Powerful and Reliable Tools for Running System Commands in R",
-        "Version": "3.4",
+        "Version": "3.4.1",
         "Authors@R": "c(person(\"Jeroen\", \"Ooms\", role = c(\"aut\", \"cre\"), \n      email = \"jeroen@berkeley.edu\", comment = c(ORCID = \"0000-0002-4035-0289\")),\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = \"ctb\"))",
         "Description": "Drop-in replacements for the base system2() function with fine control\n    and consistent behavior across platforms. Supports clean interruption, timeout, \n    background tasks, and streaming STDIN / STDOUT / STDERR over binary or text \n    connections. Arguments on Windows automatically get encoded and quoted to work \n    on different locales.",
         "License": "MIT + file LICENSE",
         "URL": "https://github.com/jeroen/sys",
         "BugReports": "https://github.com/jeroen/sys/issues",
         "Encoding": "UTF-8",
-        "LazyData": "true",
         "RoxygenNote": "7.1.1",
         "Suggests": "unix (>= 1.4), spelling, testthat",
         "Language": "en-US",
         "NeedsCompilation": "yes",
-        "Packaged": "2020-07-22 19:23:54 UTC; jeroen",
+        "Packaged": "2022-10-18 09:37:11 UTC; jeroen",
         "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),\n  Gábor Csárdi [ctb]",
         "Maintainer": "Jeroen Ooms <jeroen@berkeley.edu>",
         "Repository": "CRAN",
-        "Date/Publication": "2020-07-23 04:30:02 UTC",
-        "Built": "R 4.0.2; x86_64-pc-linux-gnu; \"Thu, 23 Jul 2020 20:42:04 +0000\"; unix"
+        "Date/Publication": "2022-10-18 12:40:02 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-28 17:11:54 UTC; unix"
       }
     },
     "sysfonts": {
@@ -4979,12 +4989,12 @@
       }
     },
     "unhcrdown": {
-      "Source": "CRAN",
+      "Source": "github",
       "Repository": null,
-      "GithubRepo": null,
-      "GithubUsername": null,
-      "GithubRef": null,
-      "GithubSha1": null,
+      "GithubRepo": "unhcrdown",
+      "GithubUsername": "vidonne",
+      "GithubRef": "HEAD",
+      "GithubSha1": "55d4f56a226b2d96b221f0c5ee5948f964e46bbc",
       "description": {
         "Package": "unhcrdown",
         "Title": "UNHCR Templates for R Markdown",
@@ -4993,19 +5003,30 @@
         "Description": "Produce documents compliant with UNHCR brand identity.",
         "License": "MIT + file LICENSE",
         "Encoding": "UTF-8",
-        "LazyData": "true",
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.2.1",
-        "Imports": "magick,\npagedown,\nofficedown,\nrmarkdown,\nofficer,\nxaringan,\nunhcrdesign",
+        "Imports": "magick, pagedown, officedown, rmarkdown, officer, xaringan,\nunhcrdesign",
         "URL": "https://github.com/vidonne/unhcrdown,\nhttps://vidonne.github.io/unhcrdown/",
         "BugReports": "https://github.com/vidonne/unhcrdown/issues",
         "Remotes": "vidonne/unhcrdesign",
-        "Suggests": "knitr,\nfontawesome",
+        "Suggests": "knitr, fontawesome",
         "VignetteBuilder": "knitr",
         "Config/Needs/website": "vidonne/unhcrtemplate",
+        "RemoteType": "github",
+        "RemoteHost": "api.github.com",
+        "RemoteRepo": "unhcrdown",
+        "RemoteUsername": "vidonne",
+        "RemoteRef": "HEAD",
+        "RemoteSha": "55d4f56a226b2d96b221f0c5ee5948f964e46bbc",
+        "GithubRepo": "unhcrdown",
+        "GithubUsername": "vidonne",
+        "GithubRef": "HEAD",
+        "GithubSHA1": "55d4f56a226b2d96b221f0c5ee5948f964e46bbc",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-10-28 17:37:35 UTC; edouard",
         "Author": "Cedric Vidonne [aut, cre],\n  Ahmadou Dicko [aut],\n  Edouard Legoupil [aut],\n  UNHCR [cph]",
         "Maintainer": "Cedric Vidonne <vidonne@unhcr.org>",
-        "Built": "R 4.2.1; ; 2022-09-16 15:58:03 UTC; unix"
+        "Built": "R 4.2.1; ; 2022-10-28 17:37:35 UTC; unix"
       }
     },
     "unhcrthemes": {
@@ -5563,7 +5584,7 @@
       "description": {
         "Package": "zip",
         "Title": "Cross-Platform 'zip' Compression",
-        "Version": "2.2.1",
+        "Version": "2.2.2",
         "Author": "Gábor Csárdi, Kuba Podgórski, Rich Geldreich",
         "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
         "Description": "Cross-Platform 'zip' Compression Library. A replacement\n    for the 'zip' function, that does not require any additional\n    external tools on any platform.",
@@ -5575,10 +5596,10 @@
         "Suggests": "covr, processx, R6, testthat, withr",
         "Encoding": "UTF-8",
         "NeedsCompilation": "yes",
-        "Packaged": "2022-09-08 09:33:32 UTC; gaborcsardi",
+        "Packaged": "2022-10-25 13:31:24 UTC; gaborcsardi",
         "Repository": "CRAN",
-        "Date/Publication": "2022-09-08 10:20:02 UTC",
-        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-09-13 02:14:51 UTC; unix"
+        "Date/Publication": "2022-10-26 10:50:02 UTC",
+        "Built": "R 4.2.1; x86_64-pc-linux-gnu; 2022-10-28 17:37:21 UTC; unix"
       }
     }
   },
@@ -5587,10 +5608,16 @@
       "checksum": "71e91187a713ee37d2470c0745a2bebe"
     },
     "DataCollectionMonitoring.Rmd": {
-      "checksum": "6caf67526f68ed299d10a729a33e0a15"
+      "checksum": "92add340a9ad96b5a316f49682780bcc"
+    },
+    "fromGit.png": {
+      "checksum": "240438720ddd7a60a7806ce55848a3bf"
+    },
+    "fromGit2.png": {
+      "checksum": "1f1c224d953b8fccd8a92a6aed973cf6"
     },
     "README.md": {
-      "checksum": "50cd8d022c188e0e2101b6604f20951a"
+      "checksum": "d3324076b1089ec5c3865d608bbcd1fd"
     }
   },
   "users": null

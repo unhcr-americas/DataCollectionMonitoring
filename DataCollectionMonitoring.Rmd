@@ -44,30 +44,32 @@ options(scipen = 999) # turn-off scientific notation like 1e+48
 set.seed(1)
 extrafont::loadfonts(quiet=TRUE)
 
+library("tidyverse")
 library("ggplot2")
-library("unhcrthemes")
-ggplot2::theme_set( unhcrthemes::theme_unhcr(font_size = 16))
-
-library(tidyverse)
-library(lubridate)
-library(httr)
+library("lubridate")
+library("httr")
 library("officedown")
 
-# devtools::install_github("edouard-legoupil/HighFrequencyChecks")
-# devtools::install_github("vidonne/unhcrthemes")
-# devtools::install_github("vidonne/unhcrdown")
+#library(devtools)
+#install_github("r-lib/devtools")
+#devtools::install_github("vidonne/unhcrthemes")
+library("unhcrthemes")
 
-library(HighFrequencyChecks)
-library(unhcrthemes)
+#devtools::install_github("vidonne/unhcrdown")
+library("unhcrdown")
 
-# remotes::install_gitlab("dickoa/robotoolbox")
+#devtools::install_github("edouard-legoupil/HighFrequencyChecks")
+library("HighFrequencyChecks")
+
+#install_gitlab("dickoa/robotoolbox")
+library("robotoolbox")
+
 #  edit directly the .Renviron file or access it by calling usethis::edit_r_environ() (assuming you have the usethis package installed) 
 # and entering the following two lines:
 # 
 # KOBOTOOLBOX_URL="https://kobo.unhcr.org/"
 # KOBOTOOLBOX_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-library("robotoolbox")
 #kobo_settings()
 
 # turn off the automatic use of showtext functionality, so that the dml function can works properly
